@@ -1,0 +1,52 @@
+(define (prime? n)
+	(= n (smallest-divisor n)))
+
+(define (smallest-divisor n)
+  (find-divisor n 2))
+
+(define (find-divisor n test-divisor)
+  (cond ((> (square test-divisor) n) n)
+        ((divides? test-divisor n) test-divisor)
+        (else (find-divisor n (+ test-divisor 1)))))
+
+(define (divides? a b)
+  (= (remainder b a) 0))
+
+(define (timed-prime-test n)
+	(newline)
+	(display n)
+	(start-prime-test n (runtime)))
+
+(define (start-prime-test n start-time)
+	(if (prime? n)
+			;;(report-prime (- (runtime) start-time))
+			(report-prime-time start-time)
+			#f))
+
+(define (report-prime elapsed-time)
+	(display " *** ")
+	(display elapsed-time))
+
+(define (report-prime-time start-time)
+	(newline)
+	(display "Start time: ")
+	(display start-time)
+	(newline)
+	(display "End time: ")
+	(display (runtime))
+	(newline)
+	(display "Was running for: ")
+	(display (- (runtime) start-time))
+	(newline)
+	(newline))
+
+(define (search-for-primes start-num count)
+	(if (> count 0)
+			(if (not (timed-prime-test start-num))
+					(search-for-primes (next-odd start-num) count)
+					(search-for-primes (next-odd start-num) (- count 1)))))
+
+(define (next-odd n)
+	(if (even? n)
+			(+ n 1)
+			(+ n 2)))
