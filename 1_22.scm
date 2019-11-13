@@ -19,8 +19,8 @@
 
 (define (start-prime-test n start-time)
 	(if (prime? n)
-			;;(report-prime (- (runtime) start-time))
-			(report-prime-time start-time)
+			(report-prime (- (runtime) start-time))
+			;;(report-prime-time start-time)
 			#f))
 
 (define (report-prime elapsed-time)
