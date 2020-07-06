@@ -1,16 +1,18 @@
 ;;recursive process
 (define (cont-frac n d k)
-	(if (= k 0)
-			(/ (n k) (d k))
-			(/ (n k) (+ (d k) (cont-frac n d (- k 1))))))
+	(define (frac i)
+		(if (> i k)
+				0
+				(/ (n i) (+ (d i) (frac (+ 1 i))))))
+	(frac 1))
 
 ;; iterative process
 (define (cont-frac-iter n d k)
-	(define (iter n d k res)
-		(if (< k 0)
+	(define (iter i res)
+		(if (> i k)
 				res
-				(iter n d (- k 1) (/ (n k) (+ (d k) res)))))
-	(iter n d k 0))
+				(iter (+ i 1) (/ (n i) (+ (d i) res)))))
+	(iter 1 0))
 
 (define tolerance .000099)
 (define gldn-ratio .6180)
@@ -27,4 +29,4 @@
 (display (find-k (lambda (i) 1.0) (lambda (i) 1.0) 1))
 (newline)
 (newline)
-(display (cont-frac-iter (lambda (i) 1.0) (lambda (i) 1.0) 10))
+(display (cont-frac-iter (lambda (i) 1.0) (lambda (i) 1.0) 11))
